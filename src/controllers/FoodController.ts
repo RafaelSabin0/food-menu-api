@@ -4,6 +4,20 @@ import Food from "../database/schema/Food";
 
 class FoodController {
 
+
+    async getRice(request: Request, response: Response) {
+        try{
+            const food = await Food.find();
+            return response.json(food)
+
+        }catch(error) {
+            return response.status(500).json({
+                error: "🚨 Error!! 🚨",
+                message: 'erro bizarro sei la'
+            })
+        }
+    }
+
     async addFood(request: Request, response: Response) {
         const {name, price, details, rate, shortDescription, imgUrl} = request.body;
 
