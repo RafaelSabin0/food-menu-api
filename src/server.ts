@@ -1,8 +1,7 @@
-const express = require('express')
-const mongoose = require('mongoose')
+import express from 'express'
+import mongoose from 'mongoose'
 import routes from './routes';
-
-const dotenv = require("dotenv")
+import dotenv from "dotenv";
 
 dotenv.config();
 
