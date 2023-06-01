@@ -1,7 +1,8 @@
-import express from 'express'
-import dotenv from 'dotenv'
-import mongoose from 'mongoose'
+const express = require('express')
+const mongoose = require('mongoose')
 import routes from './routes';
+
+const dotenv = require("dotenv")
 
 dotenv.config();
 
@@ -20,3 +21,6 @@ app.use(routes)
 app.listen(port, () => {
     console.log(`🔥 Server is running on port ${port} 🔥`);
 })
+
+
+module.exports = app;
