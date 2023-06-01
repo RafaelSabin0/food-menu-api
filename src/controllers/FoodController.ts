@@ -8,12 +8,18 @@ class FoodController {
         const {name} = request.body;
 
         try {
-            const food = await Food.findOneAndDelete({name});            
+            const food = await Food.findOneAndDelete({name});
+            if(!food) {
+                return response.status(404).json({
+                    error: "🚨 Oops !!! 🚨",
+                    message: "Item not found, check the information sent an try again"
+                })
+            }
             return response.json(food)
         } catch(error) {
-            return response.status(404).json({
+            return response.status(500).json({
                 error: "🚨 Oops !!! 🚨",
-                message: "Rice not found, check the inserted name an try again"
+                message: error
             })
         }
     }
@@ -42,7 +48,7 @@ class FoodController {
         }catch(error) {
             return response.status(500).json({
                 error: "🚨 Error!! 🚨",
-                message: 'erro bizarro sei la'
+                message: error
             })
         }
     }
@@ -56,7 +62,7 @@ class FoodController {
             if(!food) {
                 return response.status(404).json({
                     error: "🚨 Oops!!! 🚨",
-                    message: "Rice not found"
+                    message: "Item not found"
                 })
             }
 

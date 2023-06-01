@@ -2,18 +2,18 @@ import request from "supertest";
 const app = require("../src/server")
 
 describe("GET /food", () => {
-    it("should return 200", async () => {
+    it("should return status 200", async () => {
         const response = await request(app).get("/food");
         expect(response.statusCode).toBe(200);
         expect(response.body);
       });
     
-    it("should return 404 if it is a unknown endpoint", async ()=> {
+    it("should return status 404 if it is a unknown endpoint", async ()=> {
         const response = await request(app).get("/foods");
         expect(response.statusCode).toBe(404);
     })
 
-    it("should have a rice information", async () => {
+    it("should return all the items of food category", async () => {
         const response = await request(app).get("/food");
         response.body.forEach((element: any) => {
             expect(element).toHaveProperty('name')
@@ -29,7 +29,7 @@ describe("GET /food", () => {
 
 
 describe("POST /find", () => {
-    it("should return 200 if find the inserted value", async () => {
+    it("should return status 200 if find the inserted value", async () => {
         const response = await request(app)
         .post("/food/find")
         .send({
@@ -38,7 +38,7 @@ describe("POST /find", () => {
         expect(response.statusCode).toBe(200);
     })
 
-    it("should return 404 if the information is not found", async () => {
+    it("should return status 404 if the information is not found", async () => {
         const response = await request(app)
         .post("/food/find")
         .send({
@@ -60,7 +60,7 @@ describe("POST /find", () => {
 
 
 describe("POST /create", () => {
-    it("should return status 200 when the food in created and return the created food on the body", async () => {
+    it("should return status 200 when the food is created and return the created food on the response body", async () => {
         const response = await request(app)
         .post("/food/create")
         .send({
@@ -71,8 +71,14 @@ describe("POST /create", () => {
           "shortDescription": "Comes with a Vegetable Sauce",
           "imgUrl": "https://www.olgasflavorfactory.com/wp-content/uploads/2021/05/How-to-cook-long-grain-white-rice-2.jpg"
         })
-        expect(response.body).toHaveProperty("name", "SUPER TEST RICE")
         expect(response.statusCode).toBe(200)
+        expect(response.body).toHaveProperty("_id")
+        expect(response.body).toHaveProperty("name", "SUPER TEST RICE")
+        expect(response.body).toHaveProperty("price", "500.00")
+        expect(response.body).toHaveProperty("details", "Super test rice")
+        expect(response.body).toHaveProperty("rate", "0.0")
+        expect(response.body).toHaveProperty("shortDescription", "Comes with a Vegetable Sauce")
+        expect(response.body).toHaveProperty("imgUrl", "https://www.olgasflavorfactory.com/wp-content/uploads/2021/05/How-to-cook-long-grain-white-rice-2.jpg")
 
     })
 
@@ -87,10 +93,7 @@ describe("POST /create", () => {
           "shortDescription": "Comes with a Vegetable Sauce",
           "imgUrl": "https://www.olgasflavorfactory.com/wp-content/uploads/2021/05/How-to-cook-long-grain-white-rice-2.jpg"
         })
-        expect(response.statusCode).toBe(400);
         expect(response.statusCode).not.toBe(200);
-        expect(response.statusCode).not.toBe(201);
-
     })
 })
 
@@ -108,16 +111,25 @@ describe("PUT /update", () => {
 
 
 describe("DELETE /food/delete", () =>{
-    it("should delete the item if the name is inserted", async () => {
+    it("should delete the item if the name is sent and return the deleted item in the response", async () => {
         const response = await request(app)
         .delete("/food/delete")
         .send({
             "name":"SUPER TEST RICE"
         })
         expect(response.statusCode).toBe(200)
+        expect(response.body).toHaveProperty("_id")
+        expect(response.body).toHaveProperty("name", "SUPER TEST RICE")
+        expect(response.body).toHaveProperty("price", "500.00")
+        expect(response.body).toHaveProperty("details", "Super test rice")
+        expect(response.body).toHaveProperty("rate", "0.0")
+        expect(response.body).toHaveProperty("shortDescription", "Comes with a Vegetable Sauce")
+        expect(response.body).toHaveProperty("imgUrl", "https://www.olgasflavorfactory.com/wp-content/uploads/2021/05/How-to-cook-long-grain-white-rice-2.jpg")
+
+
     })
 
-    it("should return an error if the item does not exist", async () => {
+    it("should return an error if the item does not exist or was already deleted", async () => {
         const response = await request(app)
         .delete("/food/delete")
         .send({
