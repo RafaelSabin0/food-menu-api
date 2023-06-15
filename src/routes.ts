@@ -1,5 +1,6 @@
 import { Router } from "express";
 import FoodController from "./controllers/FoodController";
+import CategoryController from "./controllers/CategoryController";
 
 const routes = Router();
 
@@ -11,9 +12,10 @@ routes.put("/food/update", FoodController.updateFood);
 routes.delete("/food/delete", FoodController.deleteFood);
 
 //Category
-routes.get("/category", FoodController.getCategory);
-routes.post("/category/create", FoodController.addCategory);
-routes.post("/category/createMany", FoodController.addManyCategories);
+routes.get("/category", CategoryController.getCategory);
+routes.post("/category/create", CategoryController.addCategory);
+routes.post("/category/categoriesList", CategoryController.addCategoriesList);
+routes.post("/food/findByCategory", FoodController.findByCategory)
 
 
 

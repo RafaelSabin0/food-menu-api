@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const Rice = new mongoose.Schema({
+const Food = new mongoose.Schema({
     name: {
         type: String, 
         unique: true,
@@ -11,6 +11,10 @@ const Rice = new mongoose.Schema({
         required: true
     },
     details: {
+        type: String, 
+        required: true
+    },
+    category:  { 
         type: String, 
         required: true
     },
@@ -28,4 +32,4 @@ const Rice = new mongoose.Schema({
     }
 })
 
-export default mongoose.model("Rice", Rice)
+export default mongoose.model("Foods", Food)
