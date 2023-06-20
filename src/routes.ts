@@ -10,8 +10,10 @@ const routes = Router();
 routes.get("/food", authenticateToken, FoodController.getFood);
 routes.post("/food/find", authenticateToken, FoodController.getByName);
 routes.post("/food/create", authenticateToken, FoodController.addFood);
+routes.post("/food/foodList", authenticateToken, FoodController.addFoodList);
 routes.put("/food/update", authenticateToken, FoodController.updateFood);
 routes.delete("/food/delete", authenticateToken, FoodController.deleteFood);
+
 
 //Category
 routes.get("/category", authenticateToken,  CategoryController.getCategory);

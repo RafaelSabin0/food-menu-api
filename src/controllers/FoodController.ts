@@ -89,6 +89,20 @@ class FoodController {
         }
     }
 
+    async addFoodList(request: Request, response: Response) {
+        const body = request.body;
+             try {
+            const foodList = await Food.insertMany(body)
+            return response.json(foodList) 
+        } catch (error) {
+            return response.status(500).send({
+                error: '🚨 Registration Failed 🚨',
+                message: error
+            })
+        }
+    }
+    
+
     async addFood(request: Request, response: Response) {
         const {name, price, details, category, rate, shortDescription, imgUrl} = request.body;
 
