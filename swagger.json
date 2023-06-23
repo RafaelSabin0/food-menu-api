@@ -78,6 +78,155 @@
                     }
                 } 
             }
+        },
+        "/food/find": {
+            "post": {
+                "summary": "Search in the food menu",
+                "description": "This route will return the food information when the name is searched",
+                "tags": ["Food"],
+                "security":[{"bearerAuth":[]}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FindFood"
+                            },
+                            "examples": {
+                                "food": {
+                                    "value": {
+                                        "name": "Jasmine Rice"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description": "Food not found"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/FindFood"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/food/create": {
+            "post": {
+                "summary": "Create food",
+                "description": "Add new food to the Menu",
+                "tags": ["Food"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "$ref":"#/components/schemas/CreateFood"
+                            },
+                            "examples": {
+                                "food": {
+                                    "value": {
+                                        "name": "Swagger example",
+                                        "price": "0.2",
+                                        "details": "just and example",
+                                        "category": "Food",
+                                        "rate": "4.0",
+                                        "shortDescription": "template description",
+                                        "imgUrl": "http://example.com/swagger.jpg"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Item already exists"
+                    },
+                    "404": {
+                        "description":"Food not found"
+                    },
+                    "500": {
+                        "description": "Something wrong happened"
+                    },
+                    "200": {
+                        "description":"OK",
+                        "content": {
+                            "application/json":{
+                                "schema": {
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/CreateFood"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/food/findByCategory": {
+            "post": {
+                "summary": "Search by category name",
+                "description": "Search by category name",
+                "tags": ["Food"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref":"#/components/schemas/CategoryName"
+                            },
+                            "examples": {
+                                "findByCategory": {
+                                    "value": {
+                                        "category":"Drink" 
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description":"Category not found"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/CreateFood"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/category": {
+            "get": {
+                "description": "Return the categories list",
+                "summary": "Return the categories list",
+                "tags": ["Categories"],
+                "security": [{"bearerAuth": []}],
+                "produces": "application/json",
+                "responses": {
+                    "500": {
+                        "description": "Something wrong happened"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
         }
     },
 
@@ -87,6 +236,30 @@
                 "type": "object",
                 "properties": {
                     "email": "string"
+                }
+            },
+            "FindFood": {
+                "type": "object",
+                "properties": {
+                    "name": "string"
+                }
+            },
+            "CategoryName": {
+                "type": "object",
+                "properties": {
+                    "category": "string"
+                }
+            },
+            "CreateFood": {
+                "type": "object",
+                "properties": {
+                    "name": "string",
+                    "price": "string",
+                    "details": "string",
+                    "category": "string",
+                    "rate": "string",
+                    "shortDescription": "string",
+                    "imgUrl": "string"
                 }
             }
         },
