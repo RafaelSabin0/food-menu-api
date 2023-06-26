@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import FoodController from "./controllers/FoodController";
 import CategoryController from "./controllers/CategoryController";
 import jwt from 'jsonwebtoken'
@@ -22,9 +22,9 @@ routes.post("/category/categoriesList", authenticateToken, CategoryController.ad
 routes.post("/food/findByCategory", authenticateToken, FoodController.findByCategory)
 
 
-function authenticateToken(req, res, next) {
+function authenticateToken(req:Request , res: Response, next: NextFunction) {
     const authHeader = req.headers['authorization']
-    const token = authHeader.split(' ')[1]
+    const token = authHeader?.split(' ')[1]
 
     if(token == null || undefined) return res.sendStatus(401)
 
