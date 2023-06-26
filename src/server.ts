@@ -2,12 +2,8 @@ import express from 'express'
 import mongoose from 'mongoose'
 import routes from './routes';
 import dotenv from "dotenv";
-import jwt from 'jsonwebtoken'
-
-// import library and files
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../swagger.json');
-
+import swaggerUi from 'swagger-ui-express'
+import swaggerDocument from "../swagger.json";
 
 dotenv.config();
 
@@ -23,7 +19,6 @@ mongoose.connect(`mongodb+srv://${dbUsername}:${dbPassword}@cluster0.66smnzd.mon
 
 app.use(express.json())
 app.use(routes)
-// let express to use this
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(port, () => {

@@ -190,7 +190,7 @@
                 }
             }
         },
-        "/food/updateFood": {
+        "/food/update": {
             "put": {
                 "summary": "Update an item of the food menu",
                 "description": "Update an item of the food menu",
