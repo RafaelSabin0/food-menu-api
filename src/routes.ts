@@ -11,15 +11,19 @@ routes.get("/food", authenticateToken, FoodController.getFood);
 routes.post("/food/find", authenticateToken, FoodController.getByName);
 routes.post("/food/create", authenticateToken, FoodController.addFood);
 routes.post("/food/foodList", authenticateToken, FoodController.addFoodList);
+routes.post("/food/findByCategory", authenticateToken, FoodController.findByCategory);
 routes.put("/food/update", authenticateToken, FoodController.updateFood);
 routes.delete("/food/delete", authenticateToken, FoodController.deleteFood);
+
 
 
 //Category
 routes.get("/category", authenticateToken,  CategoryController.getCategory);
 routes.post("/category/create", authenticateToken, CategoryController.addCategory);
 routes.post("/category/categoriesList", authenticateToken, CategoryController.addCategoriesList);
-routes.post("/food/findByCategory", authenticateToken, FoodController.findByCategory)
+routes.put("/category/update", authenticateToken, CategoryController.updateCategory);
+routes.delete("/category/delete", authenticateToken, CategoryController.deleteCategory);
+
 
 
 function authenticateToken(req:Request , res: Response, next: NextFunction) {

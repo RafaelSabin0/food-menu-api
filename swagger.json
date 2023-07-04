@@ -107,6 +107,22 @@
                             }
                         }
                     }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Something wrong happened"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/CreateFood"
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -277,6 +293,163 @@
                     }
                 }
             }
+        },
+        "/category/create": {
+            "post": {
+                "summary": "Create category",
+                "description": "Create category",
+                "tags": ["Categories"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref":"#/components/schemas/CategoryContent"
+                            },
+                            "examples": {
+                                "category": {
+                                    "value": {
+                                        "_id": "",
+                                        "category": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Item already exists"
+                    },
+                    "404": {
+                        "description":"Food not found"
+                    },
+                    "500": {
+                        "description": "Something wrong happened"
+                    },
+                    "200": {
+                        "description":"OK",
+                        "content": {
+                            "application/json":{
+                                "schema": {
+                                    "type":"object",
+                                    "$ref":"#/components/schemas/CategoryContent"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/category/categoriesList": {
+            "post": {
+                "summary": "Add a list of category to the API",
+                "description": "Add a list of category to the API",
+                "tags": ["Categories"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "$ref":"#/components/schemas/CategoryContent"
+                            },
+                            "examples": {
+                                "categoryList": {
+                                    "value": [
+                                        {
+                                            "_id": "",
+                                            "category": ""
+                                        },
+                                        {
+                                            "_id": "",
+                                            "category": ""
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Something wrong happened"
+                    },
+                    "200":{
+                        "description": "OK",
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/CategoryContent"
+                                }
+                            }
+                    }
+                }
+            }
+        },
+        "/category/update": {
+            "put": {
+                "summary": "Update category",
+                "description": "Update category",
+                "tags": ["Categories"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref":"#/components/schemas/CategoryContent"
+                            },
+                            "examples": {
+                                "updateCategory": {
+                                    "value": {
+                                        "id": "",
+                                        "category": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description":"Category not found"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/category/delete": {
+            "delete": {
+                "summary": "Delete category by Id",
+                "description": "Delete category by Id",
+                "tags": ["Categories"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CategoryId"
+                            },
+                            "examples": {
+                                "deleteCategory": {
+                                    "value": {
+                                        "_id": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "404": {
+                        "description":"Category not found"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
         }
     },
 
@@ -299,6 +472,16 @@
                 "properties": {
                     "category": "string"
                 }
+            },
+            "CategoryId": {
+                "type": "string",
+                "properties": {
+                    "_id": "string" 
+                }
+            },
+            "CategoryContent": {
+                "id": "string",
+                "category": "string"
             },
             "CreateFood": {
                 "type": "object",

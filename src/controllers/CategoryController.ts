@@ -47,6 +47,47 @@ class CategoryController {
                 })
             }
         }
+    
+    async updateCategory(request: Request, response: Response) {
+        const {id,...data} = request.body;
+            try {
+                const updateCategory = await Category.findByIdAndUpdate(id, data, {new: true});
+
+                return response.json(updateCategory)
+            } catch(error) {
+                return response.status(500).json({
+                    error: "🚨 Oops !!! 🚨",
+                    message: error
+                })
+            }
+    }
+
+    async deleteCategory(request: Request, response: Response) {
+        const {_id} = request.body;
+
+        try {
+            console.log(_id);
+            console.log("--------")
+            console.log(typeof(_id))
+            console.log("--------")
+            const categoryId = await Category.findByIdAndDelete({_id});
+            console.log(typeof(categoryId))
+            console.log("--------")
+            console.log(categoryId)
+            if(!categoryId) {
+                return response.status(404).json({
+                    error: "🚨 Oops !!! 🚨",
+                    message: "Item not found, check the information sent and try again"
+                })
+            }
+            return response.json(categoryId)
+        } catch (error) {
+            return response.status(500).json({
+                error: "🚨 Oops !!! 🚨",
+                message: error
+            })
+        }
+    }
 }
 
     
