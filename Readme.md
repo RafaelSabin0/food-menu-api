@@ -42,6 +42,8 @@ You can access the API Documentation through this [Link](https://######) (TODO)
  <img src="./assets/express-logo.png"  title="Express" alt="Express" width="60" height="60"/>&nbsp; 
  <img src="https://github.com/devicons/devicon/blob/master/icons/jest/jest-plain.svg" title="Typescript" alt="Typescript" width="60" height="60"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/mongodb/mongodb-original-wordmark.svg" title="MongoDB" alt="MongoDB" width="60" height="60"/>&nbsp;
+<img src="/assets/swagger.svg" title="Swagger" alt="Swagger" width="60" height="60"/>&nbsp;
+
 
 </div>
 
