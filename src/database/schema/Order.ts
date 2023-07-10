@@ -4,17 +4,17 @@ const Order = new mongoose.Schema({
     _id: {
         type: String
     },
-    food: {
+    orderItems: {
         type: Object
-    },
-    quantity: {
-        type: Number
     },
     details: {
         type: String
     },
-    status: {
+    orderStatus: {
         type: String
+    },
+    orderDate: {
+        type: Date
     },
     totalPrice: {
         type: String
