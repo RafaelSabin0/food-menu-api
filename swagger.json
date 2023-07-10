@@ -450,6 +450,132 @@
                     }
                 }
             }
+        },
+        "/order": {
+            "post": {
+                "summary": "Return list of orders",
+                "description": "Retrn list of orders",
+                "tags": ["Orders"],
+                "security": [{"bearerAuth": []}],
+                "responses": {
+                    "404": {
+                        "description": "No orders found"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/order/finished": {
+            "post": {
+                "summary": "Return list of finished orders",
+                "description": "Retrn list of finished orders",
+                "tags": ["Orders"],
+                "security": [{"bearerAuth": []}],
+                "responses": {
+                    "404": {
+                        "description": "No orders found"
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/order/new": {
+            "post": {
+                "summary": "Add Order",
+                "description": "Add Order",
+                "tags": ["Orders"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AddOrder"
+                            },
+                            "examples": {
+                                "order": {
+                                    "value": {
+                                            "_id":"EX",
+                                            "orderItems": [{
+                                                "name": "Sushi",
+                                                "quantity": "2"
+                                            }, 
+                                            {
+                                                "name": "Soda",
+                                                "quantity": "1"	
+                                            }
+                                            ],
+                                            "details":"two hashis",
+                                            "orderStatus":"new",
+                                            "orderDate":"10-07-2023",
+                                            "totalPrice": "16.00"        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Something wrong happened"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/AddOrder"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/order/update": {
+            "put": {
+                "summary": "Update Order",
+                "description": "Update Order",
+                "tags": ["Orders"],
+                "security": [{"bearerAuth": []}],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AddOrder"
+                            },
+                            "examples": {
+                                "order": {
+                                    "value": {
+                                            "id":"EX4",
+                                            "orderStatus":"done"       
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "500": {
+                        "description": "Something wrong happened"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/AddOrder"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
 
@@ -524,6 +650,17 @@
                         "imgUrl": "string"
                   }
                 ]
+            },
+            "AddOrder": {
+                "type": "object",
+                "properties": {
+                    "_id": "string",
+                    "orderItems": "object",
+                    "details": "string",
+                    "orderStatus": "string",
+                    "orderDate": "date",
+                    "totalPrice": "string"
+                }
             }
         },
         "securitySchemes": {
