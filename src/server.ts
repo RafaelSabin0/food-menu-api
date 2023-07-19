@@ -4,6 +4,7 @@ import routes from './routes';
 import dotenv from "dotenv";
 import swaggerUi from 'swagger-ui-express'
 import swaggerDocument from "../swagger.json";
+import cors from 'cors';
 
 dotenv.config();
 
@@ -18,6 +19,7 @@ mongoose.connect(`mongodb+srv://${dbUsername}:${dbPassword}@cluster0.66smnzd.mon
 //middlewawres
 
 app.use(express.json())
+app.use(cors())
 app.use(routes)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
