@@ -17,13 +17,14 @@ class CategoryController {
 
     async addCategory(request: Request, response: Response) {
 
-        const {_id, category} = request.body;
+        const {_id, category, categoryImg} = request.body;
 
 
         try {
             const reqBody = await Category.create({
                 _id,
-                category
+                category,
+                categoryImg
             })
 
             return response.json(reqBody);
