@@ -16,6 +16,10 @@
         {
             "url": "http://localhost:5000",
             "description": "Test API"
+        },
+        {
+            "url": "http://localhost:4000",
+            "description": "Auth API"
         },       
         {
             "url": "http://foodapiexample.com",
@@ -23,6 +27,87 @@
         }
     ],
     "paths": {
+        "/login": {
+            "post": {
+                "summary": "Generate Access Token",
+                "description": "Generate Access token. Add the email and before clicking Execute, make sure to select the **AUTH API** option in the ***Servers*** menu",
+                "tags": ["Token"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "$ref": "#/components/schemas/TokenRequest"
+                            },
+                            "examples": {
+                                "token": {
+                                    "email": "example@email.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "403": {
+                        "description": "Access Denied"
+                    },
+                    "404":{
+                        "description": "Not Found. Check If you are using the correct server!"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema": {
+                                    "type": "object",
+                                    "accessToken": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/token": {
+            "post": {
+                "summary": "Refresh Token",
+                "description": "Refresh Token. Add the refresh token in order to get a new Access Token and before clicking Execute, make sure to select the **AUTH API** option in the ***Servers*** menu",
+                "tags": ["Token"],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema":{
+                                "$ref":"#/components/schemas/RefreshTokenRequest"
+                            },
+                            "examples": {
+                                "token": {
+                                    "email": "YOUR REFRESH TOKEN"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "403": {
+                        "description": "Access Denied"
+                    },
+                    "404":{
+                        "description": "Not Found. Check If you are using the correct server!"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json":{
+                                "schema": {
+                                    "type": "object",
+                                    "accessToken": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
         "/food":{
             "get":{
                 "description": "Return food list",
@@ -660,6 +745,18 @@
                     "orderStatus": "string",
                     "orderDate": "date",
                     "totalPrice": "string"
+                }
+            },
+            "TokenRequest": {
+                "type": "object",
+                "properties": {
+                    "email": "string"
+                }
+            },
+            "RefreshTokenRequest": {
+                "type": "object",
+                "properties": {
+                    "token": "string"
                 }
             }
         },
