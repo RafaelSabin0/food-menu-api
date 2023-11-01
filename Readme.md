@@ -30,7 +30,9 @@ To run tests in development environment using jest:
 
 ## API Documentation: 
 
-You can access the API Documentation through this [Link](https://######) (TODO)
+You can access the Swagger API Documentation through this [Link](https://######) (TODO)
+
+Local Env Address: ```address/api-docs```
 
 ## Technologies used in this project
 
