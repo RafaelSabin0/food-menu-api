@@ -4,16 +4,16 @@ import jwt from 'jsonwebtoken'
 import cors from 'cors'
 
 dotenv.config();
-const app = express();
+const auth = express();
 const port = process.env.AUTH_PORT || 4000;
 
 let refreshTokens: string[] = [] ;
 
-app.use(express.json());
-app.use(cors())
+auth.use(express.json());
+auth.use(cors())
 
 
-app.post('/login', (req, res) => {
+auth.post('/login', (req, res) => {
     const email = req.body.email;
     const user = {email: email};
     const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -27,13 +27,13 @@ app.post('/login', (req, res) => {
     res.json({accessToken: accessToken, refreshToken});
 })
 
-function generateAccessToken(user: string) {
-    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET as string, {expiresIn: '30m'})
+function generateAccessToken(user: any) {
+    return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET as string, {expiresIn: '1m'})
 }
 
 
 
-app.post('/token', (req, res) => {
+auth.post('/token', (req, res) => {
     const refreshToken = req.body.token;
     console.log('----------------')
     console.log('CORPO DA REQUEST: ')
@@ -42,7 +42,7 @@ app.post('/token', (req, res) => {
     if(refreshToken == null) return res.sendStatus(401)
     if(!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
 
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string, (err, user) => {
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string, (err:any, user:any) => {
         if(err) return res.sendStatus(403)
         const accessToken = generateAccessToken({email: user.email})
         
@@ -52,6 +52,8 @@ app.post('/token', (req, res) => {
 })
 
 
-app.listen(port, () => {
+auth.listen(port, () => {
     console.log(`👾 Auth Server is running on port ${port} 👾`);
 })
+
+module.exports = auth

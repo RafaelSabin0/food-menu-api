@@ -38,12 +38,12 @@ function authenticateToken(req:Request , res: Response, next: NextFunction){
 
     if(token == null || undefined) return res.sendStatus(401)
 
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string, (err, user) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET as string, (err: any, user: any) => {
         if(err) return res.status(403).json({
             error: "🚨 Oops. Check if the token is correct or expired and try again !!! 🚨",
             message: err
         })
-        req.user = user
+        //req.user = user
         next()
     })
 }
