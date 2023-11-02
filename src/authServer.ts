@@ -35,9 +35,6 @@ function generateAccessToken(user: any) {
 
 auth.post('/token', (req, res) => {
     const refreshToken = req.body.token;
-    console.log('----------------')
-    console.log('CORPO DA REQUEST: ')
-    console.log(req.body)
 
     if(refreshToken == null) return res.sendStatus(401)
     if(!refreshTokens.includes(refreshToken)) return res.sendStatus(403)
