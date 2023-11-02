@@ -50,7 +50,7 @@ auth.post('/token', (req, res) => {
 
 
 auth.listen(port, () => {
-    console.log(`👾 Auth Server is running on port ${port} 👾`);
+    console.log(`👾 Auth Server is running on port ${port}!!! 👾`);
 })
 
 module.exports = auth
