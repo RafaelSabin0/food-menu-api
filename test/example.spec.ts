@@ -2,7 +2,7 @@ import request from 'supertest'
 const app = require("../src/server")
 
 
-describe("GET /food", () => {
+describe("[EXAMPLE for CI/CD PIPELINE] on GET /food", () => {
     it("Should return an error status if there is no bearer token", async() => {
         const response = await request(app).get("/food")
 
