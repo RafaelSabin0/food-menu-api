@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest /test/food.spec.ts",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "auth": "ts-node-dev --respawn --transpile-only src/authServer.ts"
+    "auth": "ts-node-dev --respawn --transpile-only src/authServer.ts",
+    "example-test": "jest /test/example.spec.ts"
   },
   "keywords": [],
   "author": "Rafael Sabino",
