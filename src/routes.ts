@@ -32,6 +32,10 @@ routes.post("/order/finished", authenticateToken, OrderController.getFinishedOrd
 routes.post("/order/new", authenticateToken, OrderController.addOrder)
 routes.put("/order/update", authenticateToken, OrderController.updateOrder)
 
+//FILE UPLOAD
+
+routes.post("/files/upload", FoodController.sendFoodPic)
+
 function authenticateToken(req:Request , res: Response, next: NextFunction){
     const authHeader = req.headers['authorization']
     const token = authHeader?.split(' ')[1]

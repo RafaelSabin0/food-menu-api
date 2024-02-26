@@ -1,7 +1,34 @@
-import { Request, Response } from "express";
+import multer from "multer";
+import * as fs from 'fs'
+import { Request, Response, response } from "express";
 import Food from "../database/schema/Food";
+import { NextFunction } from "express-serve-static-core";
 
 class FoodController {
+
+
+    private storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            const uploadDir = './uploads';
+            if(!fs.existsSync(uploadDir)) {
+                fs.mkdirSync(uploadDir, {recursive: true})
+            }
+            cb(null, uploadDir);
+        },
+        filename: function(req, file, cb) {
+
+            console.log('====FILE INFO===')
+            console.log(file.mimetype)
+            
+            if(!file.mimetype.startsWith('image')) {
+                return cb(new Error('Só é permitido o envio de Imagens'), file.originalname);
+            }
+            
+            cb(null, Date.now() + '-' + file.originalname);
+        }
+    })
+
+    private upload = multer({ storage: this.storage});
 
     async findByCategory(request: Request, response: Response) {
         const {category} = request.body;
@@ -135,7 +162,49 @@ class FoodController {
             })
         }
     }
+
+
+    sendFoodPic = (request: Request, response: Response, next: NextFunction) => {
+
+
+        const timer = setTimeout(() => {
+            // Cancela a requisição
+            request.destroy();
+            // Retorna um erro de timeout
+            return response.status(500).send({
+                error: '🚨 Timeout 🚨',
+                message: 'A requisição excedeu o tempo limite'
+            });
+        }, 7000);
+
+        this.upload.single('file')(request, response, (err: any) => {
+
+            clearTimeout(timer)
+
+            if (err instanceof multer.MulterError) {
+                // Erros relacionados ao Multer
+                return response.status(500).send({
+                    error: '🚨 Upload Failed 🚨',
+                    message: err.message
+                });
+            } else if (err) {
+                return response.status(500).send({
+                    error: '🚨 Upload Failed 🚨',
+                    message: err.toString()
+                });
+            }
+
+            // Mensagem de sucesso
+            return response.status(200).send({
+                success: '🍙 Boaa Mlk 🍙',
+                message: 'Upload realizado com sucesso'
+            });
+        });
+    };
 }
+
+
+
 
 
 export default new FoodController;
